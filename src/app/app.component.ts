@@ -1,12 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-
-import { Platform, MenuController, Nav } from 'ionic-angular';
-
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ListPage } from '../pages/list/list';
-
+import { Component, Inject,ViewChild } from '@angular/core';
+import { Platform, MenuController, Nav,NavParams } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {AngularFireAuth} from 'angularfire2/auth'
+
 
 
 @Component({
@@ -16,21 +13,27 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage = HelloIonicPage;
+  rootPage:any = 'HelloIonicPage';
   pages: Array<{title: string, component: any}>;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    private angularFireAuth: AngularFireAuth
   ) {
     this.initializeApp();
 
     // set our app's pages
+
+    //Esto sirve para el menu desplegable de la izquierda del menu principal
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'Hello Ionic', component: 'HelloIonicPage' },
+      { title: 'My First List', component: 'ListPage' },
+      { title: 'My First List', component: 'PaginaPruebaPage'},
+      { title: 'My First List', component: 'OtraPaginaPage' },
+      { title: 'My First List', component: 'FormularioPage'}
     ];
   }
 
@@ -40,8 +43,24 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.angularFireAuth.auth.onAuthStateChanged(function(user) {
+
+        /*if(user){
+          this.rootPage = 'HomePage';
+        }
+        else {
+          this.rootPage = 'LoginPage';
+        }*/
+      
+      }
+      
+      );
     });
   }
+
+  /*ngOnInit(){
+    this.nav.push(this.rootPage)
+  }*/
 
   openPage(page) {
     // close the menu when clicking a link from the menu
