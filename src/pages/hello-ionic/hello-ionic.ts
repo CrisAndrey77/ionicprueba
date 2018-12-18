@@ -21,7 +21,10 @@ export class HelloIonicPage {
 
   gotoPage(){
     this.navCtrl.push('PaginaPruebaPage');
-    console.log('holamundo')
-    
+    console.log('holamundo')    
+  }
+
+  llamaPaginita(){
+    this.navCtrl.push('PaginitaPruebaPage');    
   }
 }
